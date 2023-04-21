@@ -35,5 +35,8 @@
   "jest": {
     "testEnvironment": "node",
     "globalTeardown": "./tests/teardown.js"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
