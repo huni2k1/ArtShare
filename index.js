@@ -12,23 +12,26 @@ const cors = require('cors')
 const insertSystemCategories = require('./utils/insertSystemCategories')
 const categoryRouter = require('./controllers/category')
 app.use(cors())
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
-mongoose.set('strictQuery',false)
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
+mongoose.set('strictQuery', false)
 mongoose.connect(config.MONGODB_URI).then(result => {
-    console.log('connected to MongoDB')
-  })
+  console.log('connected to MongoDB')
+})
   .catch((error) => {
     console.log('error connecting to MongoDB:', error.message)
   })
+app.get('/', (req, res) => {
+  res.send('Welcome to my API!');
+});
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/artworks', artworkRouter)
 app.use('/api/comments', commentRouter)
 app.use('/api/relationships', relationshipRouter)
-app.use('/api/categories',categoryRouter)
+app.use('/api/categories', categoryRouter)
 insertSystemCategories()
-const server=app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT || 4000, () => {
   console.log(`Server running on port ${process.env.PORT}`)
 })
-module.exports = {app,server}
+module.exports = { app, server }
