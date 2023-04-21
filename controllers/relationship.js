@@ -1,5 +1,5 @@
 const relationshipRouter = require('express').Router()
-const Relationship = require('../models/Relationship')
+const Relationship = require('../models/relationship')
 
 relationshipRouter.get('/', async (request, response) => {
     Relationship.find({}).then(relationships => {
