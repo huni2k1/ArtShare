@@ -28,8 +28,7 @@ app.use('/api/comments', commentRouter)
 app.use('/api/relationships', relationshipRouter)
 app.use('/api/categories',categoryRouter)
 insertSystemCategories()
-const PORT = 3001
-const server=app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+const server=app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`)
 })
 module.exports = {app,server}
