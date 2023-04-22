@@ -11,6 +11,7 @@ const relationshipRouter = require('./controllers/relationship')
 const cors = require('cors')
 const insertSystemCategories = require('./utils/insertSystemCategories')
 const categoryRouter = require('./controllers/category')
+const path = require('path');
 app.use(cors())
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }));
@@ -21,9 +22,7 @@ mongoose.connect(config.MONGODB_URI).then(result => {
   .catch((error) => {
     console.log('error connecting to MongoDB:', error.message)
   })
-app.get('/', (req, res) => {
-  res.send('Welcome to my API!');
-});
+app.use(express.static('public/build'));
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/artworks', artworkRouter)
