@@ -14,9 +14,8 @@ artWorkRouter.get('/:id', async (request, response) => {
     })
 })
 artWorkRouter.post('/', async (request, response) => {
-    const { base64, description, likes, user,category } = request.body
+    const { description, likes, user,category } = request.body
     const artWork = new ArtWork({
-        base64,
         description,
         likes,
         user,
@@ -31,7 +30,7 @@ artWorkRouter.post('/like', async (request, response) => {
     const filter = { _id: artWorkID };
     const update = { $inc: { likes: 1 } };
     const options = { new: true };
-    const updatedArtWork = await artWork.findOneAndUpdate(filter, update, options);
+    const updatedArtWork = await ArtWork.findOneAndUpdate(filter, update, options);
     User.findById(userID, (err, user) => {
         if (err) {
             console.error(err);
@@ -51,7 +50,7 @@ artWorkRouter.post('/unlike', async (request, response) => {
     const filter = { _id: id };
     const update = { $inc: { likes: -1 } };
     const options = { new: true };
-    const updatedArtWork = await artWork.findOneAndUpdate(filter, update, options);
+    const updatedArtWork = await ArtWork.findOneAndUpdate(filter, update, options);
     response.status(201).json(updatedArtWork)
 })
 module.exports = artWorkRouter 

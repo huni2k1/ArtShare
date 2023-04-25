@@ -29,6 +29,9 @@ app.use('/api/artworks', artworkRouter)
 app.use('/api/comments', commentRouter)
 app.use('/api/relationships', relationshipRouter)
 app.use('/api/categories', categoryRouter)
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: path.join(__dirname, '/public/build/')});
+});
 insertSystemCategories()
 const server = app.listen(process.env.PORT || 4000, () => {
   console.log(`Server running on port ${process.env.PORT}`)
