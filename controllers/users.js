@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt')
 const artWork = require('../models/artwork')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
+const mongoose = require('mongoose');
+
 usersRouter.get('/', async (request, response) => {
   try {
     const users = await User.find({});
@@ -13,14 +15,24 @@ usersRouter.get('/', async (request, response) => {
 });
 usersRouter.get('/:id', async (request, response) => {
   const userId = request.params.id
-  User.find({ _id: userId }).then(users => {
-    response.json(users[0])
-  })
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      throw new Error('Invalid user ID')
+    }
+    const user = await User.findById(userId)
+    if (!user) {
+      throw new Error('User not found')
+    }
+    response.json(user)
+  } catch (error) {
+    response.status(400).json({ error: error.message })
+  }
 })
+
 usersRouter.get('/getID/:userName', async (request, response) => {
+  console.log("OK")
   const userName = request.params.userName
   User.find({ name: userName }).then(users => {
-    console.log(userName)
     response.json(users[0])
   })
 })
