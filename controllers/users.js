@@ -46,18 +46,14 @@ usersRouter.post('/', async (request, response) => {
   }
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
-
   const user = new User({
     email,
     name,
     passwordHash,
   })
-
   const savedUser = await user.save()
-
   response.status(201).json(savedUser)
 })
-
 usersRouter.post('/postLiked', async (request, response) => {
   const { userID } = request.body
   await User.find({ _id: userID }).then(user => {
@@ -75,4 +71,5 @@ usersRouter.post('/postLiked', async (request, response) => {
     }
   })
 })
+
 module.exports = usersRouter

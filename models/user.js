@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: String,
   name: String,
   passwordHash: String,
+  admin:Boolean,
   postLiked: [{ type: Schema.Types.ObjectId, ref: 'ArtWork'}]
 })
 

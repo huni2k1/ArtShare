@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
+const jwt = require('jsonwebtoken');
 
 loginRouter.post('/', async (request, response) => {
   const { email, password } = request.body
@@ -13,10 +14,12 @@ loginRouter.post('/', async (request, response) => {
       error: 'invalid username or password'
     })
   }
+  const payload={
+    id:user._id,
+    username: user.name
+  }
+  const token = jwt.sign(payload, '123', { expiresIn: '1h' });
   response.status(200)
-    .send({ email: user.email, name: user.name, id: user._id })
-
+    .send({ email: user.email, name: user.name, id: user._id,token:token })
 })
-
-
 module.exports = loginRouter
