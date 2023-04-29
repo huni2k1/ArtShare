@@ -1,0 +1,66 @@
+input[type="text"],
+input[type="password"] {
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0 10px 0 10px;
+}
+input[type="submit"] {
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  background: #01d28e;
+  border: 1px solid #01d28e;
+  color: #fff;
+  padding: 10px 20px;
+}
+input[type="submit"]:hover {
+  background: #6cf0c2;
+}
+
+.login{
+  display: flex;
+  flex-direction: column;
+  padding-top:30vh;
+  background-image: url('../../images/background-login.jpg');
+  background-size: cover;
+  height: 80vh;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.login-form {
+  background-color: transparent;
+  width:300px;
+  align-self: center;
+}
+
+.list-container {
+  display: flex;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.title {
+  font-size: 25px;
+  margin-bottom: 20px;
+  align-self: center;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px;
+}
+.bottom-text{
+    margin-top: 10px;
+    align-self: center;
+}
+.signup-link{
+    color:#01d28e
+}

@@ -1,0 +1,101 @@
+a{
+  text-decoration: none;
+  color:black
+}
+.menuBar{
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    padding:25px 25px 25px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.form{
+   padding-left: 2px;
+   height:30px;
+   display: flex;
+   align-items: center;
+   border-width: 1px;
+   border: 1px solid rgba(0, 0, 0, 0.2);
+   border-radius:6px
+}
+.userAvaContainer{
+  display: flex;
+  cursor: pointer;
+}
+.searchBar{
+    width:40vw;
+    border-radius: 6px;
+    height: 30px !important;
+    border: 0px !important
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+@media only screen and (max-width: 800px) {
+    .form{
+        width:20vw;
+        margin: 0 5px 0 5px;
+    }
+}
+.mainPage{
+  display: flex;
+  flex-direction: column;
+  padding:10px 25px 10px 25px;
+  background-image: url('../../images/background2.jpg');
+  background-size: cover;
+  min-height: 100vh;
+  height: 100%;
+}
+.dropdownMenu{
+  background-color: transparent;
+}
+.dropDownList{
+  background-color: white;
+  position:absolute;
+  min-width: 140px;
+  margin-top:5px;
+  list-style-type: none;
+  padding:0px 0px 0px 0px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  font-size: 14px;
+}
+.dropDownItem{
+  cursor: pointer;
+  padding:3px;
+}
+.dropDownItemSelected{
+  background-color:#01d28e;
+  padding:3px;
+}
+.dropdownButton{
+  display: flex;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 8px 8px 8px 8px;
+  align-items: center;
+}
+.dropdownIcon{
+  margin-left: 10px;
+}
+.test{
+  height: 400px;
+}
+.artWorkContainer{
+  display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+  padding:0px;
+}
+.artWork{
+  flex-basis: 25%;
+  text-decoration: none;
+  margin-bottom: 25px;
+}
+.userImage{
+  width:25px;
+  height: auto;
+  margin-left: 5px;
+  border-radius: 15px;
+}

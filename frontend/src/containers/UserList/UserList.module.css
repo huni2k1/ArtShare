@@ -1,0 +1,44 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding:20px;
+  }
+  thead {
+    background-color: #333;
+    color: white;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+  
+  }
+  thead th {
+    width: 25vw;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #eee;
+  }
+  .form{
+    padding-left: 2px;
+    height:30px;
+    display: flex;
+    align-items: center;
+    border-width: 1px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius:6px
+ }
+.searchBar{
+    width:40vw;
+    border-radius: 6px;
+    height: 30px !important;
+    border: 0px !important
+}

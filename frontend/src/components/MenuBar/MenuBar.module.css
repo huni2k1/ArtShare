@@ -1,0 +1,55 @@
+.menuBar{
+    background-color: white;
+    align-items: center;
+    padding:15px 15px 15px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.form{
+    padding-left: 2px;
+    height:30px;
+    display: flex;
+    align-items: center;
+    border-width: 1px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius:6px
+ }
+.searchBar{
+    width:40vw;
+    border-radius: 6px;
+    height: 30px !important;
+    border: 0px !important
+}
+.userAvaContainer{
+    display: flex;
+    cursor: pointer;
+  }
+.userImage{
+    width:25px;
+    height: auto;
+    margin-left: 5px;
+    border-radius: 15px;
+}
+.linkStyle{
+    font-Family: "unset";
+    text-Decoration: "none";
+    color: "black",;
+    font-Weight: "400";
+    font-Size: 15;
+    padding: 5px 15px 5px 15px;
+}
+.dropDownList{
+    background-color: white;
+    position:absolute;
+    min-width: 100px;
+    margin-top:5px;
+    list-style-type: none;
+    padding:0px 0px 0px 0px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  .dropDownItem{
+    cursor: pointer;
+    padding:3px;
+  }

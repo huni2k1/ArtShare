@@ -1,0 +1,67 @@
+.container1{
+    display: flex;
+    justify-content: center;
+}
+.container{
+    background-image: url('../../images/background3.jpg');
+    background-size: cover;
+    min-height: 100vh;
+    height: 100%;
+}
+.created{
+    font-size: 15;
+    padding: 5px 15px 5px 15px;
+    cursor: pointer;
+}
+.liked{
+    font-Size: 15;
+    margin-left: 50px;
+    padding: 5px 15px 5px 15px;
+    cursor: pointer;
+
+}
+.createdSelected{
+    padding: 5px 15px 5px 15px;
+    font-size: 15;
+    background-color: #01d28e;
+    border-radius: 30px;
+}
+.likedSelected{
+    padding: 5px 15px 5px 15px;
+    font-size: 15;
+    background-color: #01d28e;
+    border-radius: 30px;
+    margin-left: 50px;
+}
+.container2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding:15px
+}
+.artWorkContainer{
+    display: flex;
+    list-style-type: none;
+    flex-wrap: wrap;
+
+}
+.artWork{
+    flex-basis: 25%; 
+    text-decoration: none;
+    margin-bottom: 25px;
+}
+.userImage{
+    border-radius: 25px;
+}
+.bold{
+    display: inline;
+    font-weight: bold;
+}
+.followButton{
+    background-color: #01d28e;
+    padding:5px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin:5px 0px 5px 0px;
+}

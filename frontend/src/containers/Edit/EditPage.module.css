@@ -1,0 +1,43 @@
+.mainPage{
+    display: flex;
+    padding:50px 150px 50px 150px;
+    justify-content: space-between;
+    background-image: url('../../images/background-login.jpg');
+    background-size: cover; 
+    height: 90vh;;
+}
+.artwork{
+    width:35vw;
+    height:auto;
+}
+.artworkContainer{
+}
+.editContainer{
+    width:50vw;
+}
+
+.formContainer{
+}
+.descriptionInput{
+    width:35vw;
+}
+.postForm{
+}
+.select{
+    width:35vw;
+}
+@media only screen and (max-width: 1300px) {
+   .artwork{
+    width:50vw;
+    align-self: center;
+   }
+   .descriptionInput{
+    width:70vw;
+   }
+   .mainPage{
+    display: flex;
+    margin:10px;
+    flex-direction: column;
+    align-items: center;
+}
+}
