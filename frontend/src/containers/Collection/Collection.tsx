@@ -28,6 +28,7 @@ export default function () {
             let promises;
             if (showMode == "created") {
                 response = await axios.get(process.env.REACT_APP_BACKEND_URL + '/api/artworks?user='+userID);
+                console.log(response.data)
                 promises = response.data.map(async (artWork: any) => {
                     const url = await getDownloadURL(ref(storage, artWork._id));
                     const base64Response = await axios.get(url);
@@ -36,7 +37,7 @@ export default function () {
                 });
                 Promise.all(promises)
                     .then(artWorks => {
-                         setArtWorks(artWorks);
+                        setArtWorks(artWorks);
                         setLoading(false)
                     })
                     .catch(error => {

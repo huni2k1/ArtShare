@@ -9,13 +9,10 @@ export default function MenuBar({ page }: { page: string }) {
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         navigate("/home?" + "search=" + searchVal)
-
     };
     const [isOpen, setIsOpen] = useState(false);
-
     const linkStyle = { fontFamily: "unset", textDecoration: "none", color: "black", fontWeight: "400", fontSize: 15, padding: "5px 15px 5px 15px" }
     const currLinkStyle = { fontFamily: "unset", textDecoration: "none", color: "black", fontWeight: "400", fontSize: 15, padding: "5px 15px 5px 15px", backgroundColor: "#01d28e", borderRadius: 30 }
-
     return (
         <div className={styles.menuBar}>
             <div>
