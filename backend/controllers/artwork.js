@@ -1,20 +1,30 @@
 const artWorkRouter = require('express').Router()
+const artWork = require('../models/artwork')
 const ArtWork = require('../models/artwork')
 const User = require('../models/user')
 
 artWorkRouter.get('/', async (request, response) => {
-    ArtWork.find({}).then(artWork => {
-        response.status(200).json(artWork)
-    })
-})
+    const queryParam = request.query.user;
+    const query = queryParam ? { user: queryParam } : {};
+    try {
+        const artWorks = await ArtWork.find(query).populate('user', 'name');
+        const artWorksWithUserName = artWorks.map(artWork => {
+            return { ...artWork._doc, userName: artWork.user.name };
+        });
+        response.status(200).json(artWorksWithUserName);
+    } catch (error) {
+        response.status(500).json({ message: "Error fetching artworks" });
+    }
+});
 artWorkRouter.get('/:id', async (request, response) => {
     const artWorkID = request.params.id
-    ArtWork.find({_id:artWorkID}).then(artWork => {
+    ArtWork.find({ _id: artWorkID }).then(artWork => {
         response.status(200).json(artWork)
     })
 })
+
 artWorkRouter.post('/', async (request, response) => {
-    const { description, likes, user,category } = request.body
+    const { description, likes, user, category } = request.body
     const artWork = new ArtWork({
         description,
         likes,
@@ -36,8 +46,8 @@ artWorkRouter.post('/like', async (request, response) => {
             console.error(err);
         } else {
             user.postLiked.push(artWorkID)
-            user.save((err,updatedDocument)=>{
-                if(err){
+            user.save((err, updatedDocument) => {
+                if (err) {
                     console.error(err);
                 }
             })

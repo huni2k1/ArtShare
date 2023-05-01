@@ -30,8 +30,7 @@ usersRouter.get('/:id', async (request, response) => {
 })
 
 usersRouter.get('/getID/:userName', async (request, response) => {
-  console.log("OK")
-  const userName = request.params.userName
+   const userName = request.params.userName
   User.find({ name: userName }).then(users => {
     response.json(users[0])
   })

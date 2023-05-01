@@ -33,7 +33,9 @@ app.use('/api/comments', commentRouter)
 app.use('/api/relationships', relationshipRouter)
 app.use('/api/categories', categoryRouter)
 app.use('/api/verifyAdmin', verifyAdmin)
-
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: path.join(__dirname, '/public/build')});
+});
 const server = app.listen(process.env.PORT || 4000, () => {
   console.log(`Server running on port ${process.env.PORT}`)
 })
