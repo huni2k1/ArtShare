@@ -31,7 +31,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/artworks', artworkRouter)
 app.use('/api/comments', commentRouter)
 app.use('/api/relationships', relationshipRouter)
-app.use('/api/categories', categoryRouter)
+app.use('/api/categories', categoryRouter )
 app.use('/api/verifyAdmin', verifyAdmin)
 app.get('*', function(req, res) {
   res.sendFile('index.html', {root: path.join(__dirname, '/public/build')});
