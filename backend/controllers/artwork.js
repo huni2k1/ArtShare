@@ -4,6 +4,7 @@ const ArtWork = require('../models/artwork')
 const User = require('../models/user')
 
 artWorkRouter.get('/', async (request, response) => {
+    console.log("API CALLED")
     const queryParam = request.query.user;
     const query = queryParam ? { user: queryParam } : {};
     try {
