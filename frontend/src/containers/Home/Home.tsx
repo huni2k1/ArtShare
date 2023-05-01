@@ -24,20 +24,14 @@ export default function Home() {
     const searchParams = new URLSearchParams(location.search);
     const searchQuery = searchParams.get('search');
     useEffect(() => {
-
         axios.get(process.env.REACT_APP_BACKEND_URL + '/api/artworks')
-            .then(response => {
-                let promises = response.data.map((artWork: any) => {
-                    return Promise.all([GetUserName(artWork.user), getDownloadURL(ref(storage, artWork._id))]).then(([userName, url]) => {
-                        artWork.userName = userName
-                        return axios.get(url);
-                    }).then(response => {
-                        artWork.base64 = response.data
-                        return artWork
-                    }).catch(error => {
-                        console.log("Error ")
-                        return artWork
-                    })
+            .then(async response => {
+                response = await axios.get(process.env.REACT_APP_BACKEND_URL + '/api/artworks?user=');
+                let promises = response.data.map(async (artWork: any) => {
+                    const url = await getDownloadURL(ref(storage, artWork._id));
+                    const base64Response = await axios.get(url);
+                    artWork.base64 = base64Response.data;
+                    return artWork;
                 });
                 Promise.all(promises).then((artWorks) => {
                     // const filteredArtworks = artWorks.filter(artWork => {
@@ -51,60 +45,58 @@ export default function Home() {
                     setArtWorks(artWorks);
                     setLoading(false);
                 });
-            })
-            .catch(error => {
-                console.log(error);
             });
-    }, [])
-    useEffect(() => {
-        let filteredArtWorks = filterArtWork(dropDown, artWorks)
-        setArtWorks(filteredArtWorks)
-    }, [dropDown])
-    function toggleOpen() {
-        setIsOpen(!isOpen);
-    }
-    function fetchArtWork(): any {
-    }
-    if (!isLoggedIn()) {
-        return <Navigate to="/" replace />;
-    }
-    return (
-        <div>
-            <MenuBar page="home" />
-            <div className={styles.mainPage}>
-                <div className={styles.dropdownMenu}>
-                    <button onClick={toggleOpen} className={styles.dropdownButton}>
-                        {dropDown}
-                        <AiOutlineDown className={styles.dropdownIcon} />
-                        <div></div>
-                    </button>
-                    {isOpen && (
-                        <ul className={styles.dropDownList}>
-                            {items.map(item => (
-                                <li className={item == dropDown ? styles.dropDownItemSelected : styles.dropDownItem} key={item} onClick={() => {
-                                    setDropdown(item)
-                                    setIsOpen(false)
-                                }}>
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-                {loading && <Loading />}
-                <InfiniteScroll next={() => fetchArtWork()} hasMore={hasMore} loader={<h3>Loading...</h3>} dataLength={artWorks.length}>
-                    <ul className={styles.artWorkContainer}>
-                        {artWorks.map((artWork: any) => {
-                            return (
-                                <li className={styles.artWork} key={artWork._id}>
-                                    <ArtWork artWorkID={artWork._id} imgURL={`data:image/jpeg;base64,${artWork.base64}`} userName={artWork.userName} likes={artWork.likes} />
-                                </li>)
-                        })}
+        
+    },[])
+useEffect(() => {
+    let filteredArtWorks = filterArtWork(dropDown, artWorks)
+    setArtWorks(filteredArtWorks)
+}, [dropDown])
+function toggleOpen() {
+    setIsOpen(!isOpen);
+}
+function fetchArtWork(): any {
+}
+if (!isLoggedIn()) {
+    return <Navigate to="/" replace />;
+}
+return (
+    <div>
+        <MenuBar page="home" />
+        <div className={styles.mainPage}>
+            <div className={styles.dropdownMenu}>
+                <button onClick={toggleOpen} className={styles.dropdownButton}>
+                    {dropDown}
+                    <AiOutlineDown className={styles.dropdownIcon} />
+                    <div></div>
+                </button>
+                {isOpen && (
+                    <ul className={styles.dropDownList}>
+                        {items.map(item => (
+                            <li className={item == dropDown ? styles.dropDownItemSelected : styles.dropDownItem} key={item} onClick={() => {
+                                setDropdown(item)
+                                setIsOpen(false)
+                            }}>
+                                {item}
+                            </li>
+                        ))}
                     </ul>
-                </InfiniteScroll>
+                )}
             </div>
+            {loading && <Loading />}
+            <InfiniteScroll next={() => fetchArtWork()} hasMore={hasMore} loader={<h3>Loading...</h3>} dataLength={artWorks.length}>
+                <ul className={styles.artWorkContainer}>
+                    {artWorks.map((artWork: any) => {
+                        return (
+                            <li className={styles.artWork} key={artWork._id}>
+                                <ArtWork artWorkID={artWork._id} imgURL={`data:image/jpeg;base64,${artWork.base64}`} userName={artWork.userName} likes={artWork.likes} />
+                            </li>)
+                    })}
+                </ul>
+            </InfiniteScroll>
         </div>
-    )
+    </div>
+)
 }
 
 

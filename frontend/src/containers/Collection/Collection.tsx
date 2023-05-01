@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import ArtWork from '../../components/ArtWork/ArtWork'
 import MenuBar from '../../components/MenuBar/MenuBar'
 import getDefaultImage from '../../helper/GetDefaultImage'
@@ -12,76 +11,63 @@ import GetUserName from '../../helper/GetUserName'
 import Loading from '../../components/LoadingIndicator/Loading'
 import { getDownloadURL, ref } from 'firebase/storage'
 import { storage } from '../..'
-
 export default function () {
     const { userName } = useParams()
-    const [userID, setUserID] = useState("")
     const [showMode, setShowMode] = useState("created")
     const [artWorks, setArtWorks] = useState<any>([])
     const [loading, setLoading] = useState<any>([])
     const [follower, setFollower] = useState([])
     const [following, setFollowing] = useState([])
     useEffect(() => {
-        setLoading(true)
-        setArtWorks([])
-        if (showMode == "created") {
-            axios.get(process.env.REACT_APP_BACKEND_URL+'/api/artworks')
-                .then(response => {
-                    let promises = response.data.map((artWork: any) => {
-                        return Promise.all([GetUserName(artWork.user), getDownloadURL(ref(storage, artWork._id))]).then(([userName, url]) => {
-                            artWork.userName = userName
-                            return axios.get(url);
-                        }).then(response => {
-                            artWork.base64 = response.data
-                            return artWork
-                        }).catch(error => {
-                            console.log("Error ")
-                            return artWork
-                        })
+        setLoading(true);
+        setArtWorks([]);
+        async function getArtWorks() {
+            const responsee = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/users/getID/${userName}`)
+            let userID = responsee.data.id
+            let response;
+            let promises;
+            if (showMode == "created") {
+                response = await axios.get(process.env.REACT_APP_BACKEND_URL + '/api/artworks?user='+userID);
+                promises = response.data.map(async (artWork: any) => {
+                    const url = await getDownloadURL(ref(storage, artWork._id));
+                    const base64Response = await axios.get(url);
+                    artWork.base64 = base64Response.data;
+                    return artWork;
+                });
+                Promise.all(promises)
+                    .then(artWorks => {
+                         setArtWorks(artWorks);
+                        setLoading(false)
+                    })
+                    .catch(error => {
+                        console.log(error);
                     });
-                    Promise.all(promises).then((artWorks) => {
-                        const filteredArtworks = artWorks.filter((artwork) => {
-                            return artwork.user === localStorage.getItem("userID");
-                          });
-                        setArtWorks(filteredArtworks);
-                    });
+            } else if (showMode == "liked") {
+                response = await axios.post(process.env.REACT_APP_BACKEND_URL + '/api/users/postLiked', { userID: userID });
+                promises = response.data.map(async (artWork: any) => {
+                    const [userName, url] = await Promise.all([GetUserName(artWork.user), getDownloadURL(ref(storage, artWork._id))]);
+                    artWork.userName = userName;
+                    const base64Response = await axios.get(url);
+                    artWork.base64 = base64Response.data;
+                    return artWork;
+                });
+                Promise.all(promises)
+                .then(artWorks => {
+                    setArtWorks(artWorks);
                     setLoading(false)
                 })
                 .catch(error => {
                     console.log(error);
                 });
+            }
+            return 1
         }
-        else if (showMode == "liked") {
-            axios.post(process.env.REACT_APP_BACKEND_URL+'/api/users/postLiked', { userID: localStorage.getItem("userID") })
-                .then(response => {
-                    let promises = response.data.map((artWork: any) => {
-                        return Promise.all([GetUserName(artWork.user), getDownloadURL(ref(storage, artWork._id))]).then(([userName, url]) => {
-                            artWork.userName = userName
-                            return axios.get(url);
-                        }).then(response => {
-                            artWork.base64 = response.data
-                            return artWork
-                        }).catch(error => {
-                            console.log("Error ")
-                            return artWork
-                        })
-                    });
-                    Promise.all(promises).then((artWorks) => {
-                        console.log(artWorks)
-                        setArtWorks(artWorks);
-                        setLoading(false);
-                    });
-                    setLoading(false)
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
-        axios.get(process.env.REACT_APP_BACKEND_URL+"/api/relationships/" + localStorage.getItem("userID")).then(response => {
-            setFollower(response.data.follower)
-            setFollowing(response.data.followee)
-        })
-    }, [showMode])
+        getArtWorks()
+        axios.get(process.env.REACT_APP_BACKEND_URL + "/api/relationships/" + localStorage.getItem("userID")).then(response => {
+            setFollower(response.data.follower);
+            setFollowing(response.data.followee);
+        });
+    }, [showMode]);
     return (
         <div className={styles.container}>
             <MenuBar page="collection" />
