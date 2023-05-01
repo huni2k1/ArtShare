@@ -26,7 +26,7 @@ mongoose.connect(config.MONGODB_URI).then(result => {
   })
 insertSystemCategories()
 app.use(express.static('public/build'));
-// app.use('/api/login', loginRouter)
+app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/artworks', artworkRouter)
 app.use('/api/comments', commentRouter)
