@@ -25,7 +25,7 @@ function App() {
         <Route path="/:userName" element={<Collection />} />
         <Route path="/artwork/:id" element={<ArtWorkModal />} />
         <Route path="/users" element={<UserList />} />
-        <Route path="/artworks" element={<ArtWorkList />} />
+        <Route path="/artworks" element={<ArtWorkList />}  />
       </Routes>
     </Router>
 
