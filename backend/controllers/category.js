@@ -1,6 +1,8 @@
+// Import required modules and models
 const categoryRouter = require('express').Router();
 const Category = require('../models/category');
 
+// Handle GET requests to retrieve all categories
 categoryRouter.get('/', async (request, response) => {
   try {
     const categories = await Category.find({});
@@ -11,6 +13,7 @@ categoryRouter.get('/', async (request, response) => {
   }
 });
 
+// Handle POST requests to create a new category
 categoryRouter.post('/', async (request, response) => {
   try {
     const { name } = request.body;
@@ -23,4 +26,6 @@ categoryRouter.post('/', async (request, response) => {
   }
 });
 
+
+// Export the router to be used in other parts of the application\
 module.exports = categoryRouter;

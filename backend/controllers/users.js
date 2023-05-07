@@ -1,9 +1,11 @@
+// Import required modules
 const bcrypt = require('bcrypt')
 const artWork = require('../models/artwork')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 const mongoose = require('mongoose');
 
+// Route to get all users
 usersRouter.get('/', async (request, response) => {
   try {
     const users = await User.find({});
@@ -13,6 +15,7 @@ usersRouter.get('/', async (request, response) => {
     response.status(500).json({ error: 'Internal Server Error' });
   }
 });
+// Route to get a user by their ID
 usersRouter.get('/:id', async (request, response) => {
   const userId = request.params.id
   try {
@@ -28,13 +31,14 @@ usersRouter.get('/:id', async (request, response) => {
     response.status(400).json({ error: error.message })
   }
 })
-
+// Route to get a user's ID by their name
 usersRouter.get('/getID/:userName', async (request, response) => {
    const userName = request.params.userName
   User.find({ name: userName }).then(users => {
     response.json(users[0])
   })
 })
+// Route to create a new user
 usersRouter.post('/', async (request, response) => {
   const { email, name, password } = request.body
   const findUser = await User.find({ email: email })
@@ -53,6 +57,7 @@ usersRouter.post('/', async (request, response) => {
   const savedUser = await user.save()
   response.status(201).json(savedUser)
 })
+// Route to get the posts liked by a user
 usersRouter.post('/postLiked', async (request, response) => {
   const { userID } = request.body
   await User.find({ _id: userID }).then(user => {
@@ -70,6 +75,7 @@ usersRouter.post('/postLiked', async (request, response) => {
     }
   })
 })
+// Route to deactivate a user
 usersRouter.put('/:id/deactivate', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -87,6 +93,7 @@ usersRouter.put('/:id/deactivate', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+// Route to activate a user
 usersRouter.put('/:id/activate', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);

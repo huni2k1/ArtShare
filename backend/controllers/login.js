@@ -1,8 +1,9 @@
+// Import required modules and models
 const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken');
-
+// Define a POST route for logging in
 loginRouter.post('/', async (request, response) => {
   const { email, password } = request.body
   const user = await User.findOne({ email })

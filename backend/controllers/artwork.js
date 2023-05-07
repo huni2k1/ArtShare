@@ -1,7 +1,16 @@
+
+// This file defines the artwork router, which handles HTTP requests related to artwork management.
+// It exports an instance of the Express Router that can be mounted as middleware.
+// The router defines several endpoints for fetching, creating, updating, and deleting artworks.
+// The "get" endpoints fetch artwork data, and optionally allow filtering by user.
+// The "post" endpoints allow for the creation of new artworks and updating of existing ones by incrementing or decrementing the number of likes.
+// The "put" endpoints allow for deactivating and reactivating artworks by updating the "active" flag.
+// The router relies on the ArtWork and User models defined in separate files.
 const artWorkRouter = require('express').Router()
 const artWork = require('../models/artwork')
 const ArtWork = require('../models/artwork')
 const User = require('../models/user')
+
 
 artWorkRouter.get('/', async (request, response) => {
     const queryParam = request.query.user;

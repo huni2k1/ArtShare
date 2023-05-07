@@ -1,3 +1,8 @@
+// This file defines the user schema and creates a Mongoose model for it.
+// The user schema specifies the shape of the user documents in the database.
+// It includes fields for the user's email, name, password hash, admin status, and liked posts.
+// The schema also specifies a toJSON method to transform the user document to JSON format.
+// The Mongoose model is created from the schema and exported for use in other parts of the application.
 const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
