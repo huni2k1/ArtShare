@@ -5,15 +5,19 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import Toggle from 'react-toggle';
 import { storage } from '../..';
 import styles from './ArtWorkList.module.css';
+import { deactivateArtWork } from '../../helper/DeactivateArtWork';
+import { activateArtWork } from '../../helper/ActivateArtWork';
 
 export default function ArtWorkList() {
     const [query, setQuery] = useState('');
     const [checked, setChecked] = useState(true);
     const [artWorks, setArtWorks] = useState<any>([])
     const [filteredArtwork, setFilteredArtwork] = useState<any>([])
-
+    const handleQueryChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+        setQuery(event.target.value);
+      };
     useEffect(() => {
-        axios.get('http://localhost:300/api/artworks')
+        axios.get(process.env.REACT_APP_BACKEND_URL+'/api/artworks/admin')
             .then(response => {
                 let promises = response.data.map((artWork: any) => {
                     return getDownloadURL(ref(storage, artWork._id)).then((url) => {
@@ -27,6 +31,7 @@ export default function ArtWorkList() {
                     })
                 })
                 Promise.all(promises).then((artWorks) => {
+                    console.log(artWorks)
                     setArtWorks(artWorks);
                     setFilteredArtwork(artWorks)
                 });
@@ -39,9 +44,31 @@ export default function ArtWorkList() {
         });
         setFilteredArtwork(filtered);
     };
-    const handleQueryChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setQuery(event.target.value);
-    };
+    async function handleToggleChange(artWork: any): Promise<void> {
+        try {
+          if (artWork.active) {
+            await deactivateArtWork(artWork._id);
+          } else {
+            await activateArtWork(artWork._id);
+          }
+    
+          const updatedArtWorks = artWork.map((u: any) => {
+            if (u._id === artWork._id) {
+              u.active = !u.active;
+            }
+            return u;
+          });
+    
+          setArtWorks(updatedArtWorks);
+          setFilteredArtwork(updatedArtWorks);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+
+
+
     return (
         <div className={styles.container}>
             <div className={styles.form}>
@@ -70,18 +97,17 @@ export default function ArtWorkList() {
                             <td><img src={`data:image/jpeg;base64,${artwork.base64}`} className={styles.artWork} onClick={() => { }} /></td>
                             <td>{artwork.description}</td>
                             <td>{artwork.likes}</td>
-                            <td>{artwork.user}</td>
-                            <td>{artwork.comments}</td>
+                            <td>{artwork.user.id}</td>
+                            <td>{artwork.comments || 0}</td>
                             <td>
                                 <label>
                                     <Toggle
-                                        defaultChecked={checked}
+                                        defaultChecked={artwork.active}
                                         icons={false}
-                                        onChange={() => setChecked(!checked)} />
+                                        onChange={() => handleToggleChange(artwork)} />
                                     <span>{checked ? "Active" : "Banned"}</span>
                                 </label>
                             </td>
-
                         </tr>
                     ))}
                 </tbody>

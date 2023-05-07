@@ -13,6 +13,8 @@ import { getDownloadURL, ref } from 'firebase/storage'
 import { storage } from '../..'
 export default function () {
     const { userName } = useParams()
+    const [email, setEmail] = useState()
+
     const [showMode, setShowMode] = useState("created")
     const [artWorks, setArtWorks] = useState<any>([])
     const [loading, setLoading] = useState<any>([])
@@ -24,6 +26,7 @@ export default function () {
         async function getArtWorks() {
             const responsee = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/users/getID/${userName}`)
             let userID = responsee.data.id
+            setEmail(responsee.data.email)
             let response;
             let promises;
             if (showMode == "created") {
@@ -77,7 +80,7 @@ export default function () {
                     <img src={getDefaultImage()} className={styles.userImage}></img>
                 </div>
                 <div>
-                    {localStorage.getItem("email")}
+                    {email}
                 </div>
                 <div>
                     {userName}

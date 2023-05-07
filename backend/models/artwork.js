@@ -6,6 +6,10 @@ const artWorkSchema = new mongoose.Schema({
   comments: Number,
   category:String,
   user: { type: Schema.Types.ObjectId, ref: 'User'},
+  active:{
+    type:Boolean,
+    default: true
+  }
 })
 const artWork = mongoose.model('ArtWork', artWorkSchema)
 module.exports = artWork

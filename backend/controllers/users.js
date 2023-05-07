@@ -70,5 +70,36 @@ usersRouter.post('/postLiked', async (request, response) => {
     }
   })
 })
+usersRouter.put('/:id/deactivate', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
 
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.active = false;
+
+    await user.save();
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+usersRouter.put('/:id/activate', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.active = true;
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 module.exports = usersRouter

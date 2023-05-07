@@ -6,7 +6,11 @@ const userSchema = new mongoose.Schema({
   name: String,
   passwordHash: String,
   admin:Boolean,
-  postLiked: [{ type: Schema.Types.ObjectId, ref: 'ArtWork'}]
+  postLiked: [{ type: Schema.Types.ObjectId, ref: 'ArtWork'}],
+  active:{
+    type:Boolean,
+    default: true
+  }
 })
 
 userSchema.set('toJSON', {

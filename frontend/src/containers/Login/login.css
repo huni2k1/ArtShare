@@ -50,7 +50,12 @@ input[type="submit"]:hover {
   margin-bottom: 20px;
   align-self: center;
 }
-
+.title-red {
+  font-size: 25px;
+  margin-bottom: 20px;
+  align-self: center;
+  color: red;
+}
 .input-container {
   display: flex;
   flex-direction: column;

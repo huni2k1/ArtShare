@@ -11,6 +11,7 @@ export default function Login() {
         email: ''
       });
     const navigate = useNavigate();
+    const [error,setError] = useState()
     const renderErrorMessage = (name: string) =>
         name === errorMessages.name && (
             <div className="error">{errorMessages.message}</div>
@@ -27,7 +28,7 @@ export default function Login() {
             navigate("/home")
         }).catch(error => {
             console.log(error)
-            console.log(error.response.status)
+            setError(error.response.data.error)
         })
     };
     if(isLoggedIn()){
@@ -38,6 +39,7 @@ export default function Login() {
             <h2 className="title">
                 Login
             </h2>
+            {error && <div className="title-red">{error}</div>}
             <div className="login-form">
                 <form onSubmit={handleSubmit}>
                     <div className="input-container">

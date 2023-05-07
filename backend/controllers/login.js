@@ -14,6 +14,11 @@ loginRouter.post('/', async (request, response) => {
       error: 'invalid username or password'
     })
   }
+  if(!user.active){
+    return response.status(401).json({
+      error: 'user banned'
+    })
+  }
   const payload={
     id:user._id,
     username: user.name

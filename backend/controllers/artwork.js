@@ -4,9 +4,21 @@ const ArtWork = require('../models/artwork')
 const User = require('../models/user')
 
 artWorkRouter.get('/', async (request, response) => {
-    console.log("API CALLED")
     const queryParam = request.query.user;
-    const query = queryParam ? { user: queryParam } : {};
+    const query = queryParam ? { user: queryParam,active:true } : {active:true};
+    try {
+        const artWorks = await ArtWork.find(query).populate('user', 'name');
+        const artWorksWithUserName = artWorks.map(artWork => {
+            return { ...artWork._doc, userName: artWork.user.name };
+        });
+        response.status(200).json(artWorksWithUserName);
+    } catch (error) {
+        response.status(500).json({ message: "Error fetching artworks" });
+    }
+});
+artWorkRouter.get('/admin', async (request, response) => {
+    const queryParam = request.query.user;
+    const query = queryParam ? { user: queryParam} : {};
     try {
         const artWorks = await ArtWork.find(query).populate('user', 'name');
         const artWorksWithUserName = artWorks.map(artWork => {
@@ -30,11 +42,16 @@ artWorkRouter.post('/', async (request, response) => {
         description,
         likes,
         user,
-        category
+        category,
     })
+    try{
     const savedArtWork = await artWork.save()
-
     response.status(201).json(savedArtWork)
+    }
+    catch(error){
+        console.log(error)
+        response.status(201).json("Error Fetching the artwork")
+    }
 })
 artWorkRouter.post('/like', async (request, response) => {
     const { artWorkID, userID } = request.body
@@ -64,4 +81,36 @@ artWorkRouter.post('/unlike', async (request, response) => {
     const updatedArtWork = await ArtWork.findOneAndUpdate(filter, update, options);
     response.status(201).json(updatedArtWork)
 })
+artWorkRouter.put('/:id/deactivate', async (req, res) => {
+    try {
+      const artWork = await ArtWork.findById(req.params.id);
+  
+      if (!artWork) {
+        return res.status(404).json({ message: 'ArtWork not found' });
+      }
+  
+      artWork.active = false;
+  
+      await artWork.save();
+  
+      res.json(artWork);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  artWorkRouter.put('/:id/activate', async (req, res) => {
+    try {
+      const artWork = await ArtWork.findById(req.params.id);
+  
+      if (!artWork) {
+        return res.status(404).json({ message: 'ArtWork not found' });
+      }
+  
+      artWork.active = true;
+      await artWork.save();
+      res.json(artWork);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
 module.exports = artWorkRouter 

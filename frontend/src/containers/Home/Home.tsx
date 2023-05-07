@@ -7,7 +7,6 @@ import React from 'react';
 import axios from 'axios';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import filterArtWork from '../../helper/FilterArtWork';
-import GetUserName from '../../helper/GetUserName';
 import { Navigate, useLocation } from 'react-router-dom';
 import Loading from '../../components/LoadingIndicator/Loading';
 import { getDownloadURL, ref } from 'firebase/storage';
@@ -24,9 +23,12 @@ export default function Home() {
     const searchParams = new URLSearchParams(location.search);
     const searchQuery = searchParams.get('search');
     useEffect(() => {
+        setLoading(true)
+        setArtWorks([])
         axios.get(process.env.REACT_APP_BACKEND_URL + '/api/artworks')
             .then(async response => {
                 response = await axios.get(process.env.REACT_APP_BACKEND_URL + '/api/artworks?user=');
+                console.log(response.data)
                 let promises = response.data.map(async (artWork: any) => {
                     const url = await getDownloadURL(ref(storage, artWork._id));
                     const base64Response = await axios.get(url);
@@ -34,20 +36,20 @@ export default function Home() {
                     return artWork;
                 });
                 Promise.all(promises).then((artWorks) => {
-                    // const filteredArtworks = artWorks.filter(artWork => {
-                    //     if (searchQuery) {
-                    //         return artWork.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    //             artWork.category?.toLowerCase().includes(searchQuery.toLowerCase());
-                    //     } else {
-                    //         return true
-                    //     }
-                    // });
-                    setArtWorks(artWorks);
+                    artWorks.reverse()
+                    const filteredArtworks = artWorks.filter(artWork => {
+                        if (searchQuery) {
+                            return artWork.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                artWork.category?.toLowerCase().includes(searchQuery.toLowerCase());
+                        } else {
+                            return true
+                        }
+                    });
+                    setArtWorks(filteredArtworks);
                     setLoading(false);
                 });
             });
-        
-    },[])
+    },[searchQuery])
 useEffect(() => {
     let filteredArtWorks = filterArtWork(dropDown, artWorks)
     setArtWorks(filteredArtWorks)
