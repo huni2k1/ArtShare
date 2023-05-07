@@ -13,6 +13,11 @@ interface ArtWorkProps {
   artWorkID: string
 }
 
+/**
+A functional component that displays an artwork with its author, number of likes, and download button.
+@param {ArtWorkProps} props - An object containing the necessary props for an ArtWork component, including the image URL, author's username, number of likes, and artwork ID.
+@returns A JSX element displaying the artwork, author, likes, and download button.
+*/
 export default function ArtWork({ imgURL, userName, likes, artWorkID }: ArtWorkProps) {
   const [liked, setLiked] = useState(false)
   const [numLikes, setNumLikes] = useState(likes)

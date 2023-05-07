@@ -1,3 +1,8 @@
+/* This file contains the implementation of the EditPage component,
+ which displays a form for editing an artwork's description and category labels,
+ and allows the user to upload an image of the artwork to be stored on Firebase Storage.
+It also makes use of the GetCategories helper function to retrieve the available category labels.
+*/
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"

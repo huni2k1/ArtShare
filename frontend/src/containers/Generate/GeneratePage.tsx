@@ -1,3 +1,9 @@
+
+/*
+This is a React functional component for the GeneratePage.
+It uses Axios to make an API call to generate artwork based on user input and displays the generated images for the user to choose from.
+If the user selects an image, they will be navigated to the edit page for that image.
+*/
 import axios from 'axios';
 import "./GeneratePage.css"
 import { useState } from 'react';

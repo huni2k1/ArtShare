@@ -1,3 +1,20 @@
+/**
+This is the main component of the application which handles routing for different pages.
+It uses react-router-dom for client-side routing.
+The different pages are:
+Login
+Signup
+GeneratePage
+EditPage
+Home
+Collection
+ArtWorkModal
+UserList
+ArtWorkList
+Each page is a separate component and is rendered as per the corresponding route.
+This component exports the App component which is used as the main entry point for the application.
+*/
+
 import './App.css';
 import Login from './containers/Login/login';
 import {

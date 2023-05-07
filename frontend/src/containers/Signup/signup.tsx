@@ -1,3 +1,12 @@
+/*
+This file contains the Signup component which is used to render the sign-up page of the application.
+It imports axios to handle HTTP requests and useState to manage form data and errors.
+It also imports useNavigate to redirect the user after successful sign-up.
+The component renders a form where the user can enter their email, name, and password to create a new account.
+Upon form submission, the function handleSubmit sends a POST request to the server to create a new user account with the entered details.
+If the request is successful, the user is redirected to the home page.
+If there is an error, it is logged in the console and no action is taken.
+*/
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";

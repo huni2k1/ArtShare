@@ -1,3 +1,7 @@
+/**
+ * Component that represents a single comment.
+ * It displays the comment text, date, and the user who posted it.
+ */
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import styles from "./Comment.module.css"

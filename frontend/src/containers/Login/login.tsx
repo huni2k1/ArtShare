@@ -1,3 +1,8 @@
+/*
+This file contains the code for the Login component, which is used to handle user authentication.
+It uses the axios library to send a post request to the backend API and handles the response accordingly.
+If the user is already logged in, they are redirected to the home page using the useNavigate hook from the React Router DOM library.
+*/
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";

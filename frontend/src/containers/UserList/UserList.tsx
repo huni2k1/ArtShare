@@ -1,3 +1,13 @@
+/*
+This is a React component that displays a list of users fetched from a backend server using Axios.
+The component allows an admin user to search for a user by name or email, toggle a user's active status,
+and view user information such as name, email, and active status.
+
+The component uses React hooks to manage state and includes helper functions for verifying admin status,
+deactivating and activating users, and handling search and toggle events.
+
+Styling is done using CSS modules to ensure styles are scoped to the component and do not interfere with other parts of the app.
+*/
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styles from './UserList.module.css';

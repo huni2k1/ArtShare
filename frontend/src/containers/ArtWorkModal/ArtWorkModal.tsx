@@ -1,3 +1,9 @@
+/*
+This is a component for displaying an artwork, along with its details and comments.
+It uses Axios for API requests, React Hooks for state management, and Firebase Storage to store and retrieve image files.
+The component renders the artwork image, along with its description, user details, and icons for liking, commenting, and downloading.
+It also allows users to add comments and updates the comments section in real-time.
+*/
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { BsDownload, BsHeartFill } from 'react-icons/bs'

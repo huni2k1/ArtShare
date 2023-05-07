@@ -1,3 +1,10 @@
+/* This file contains the Collection component, which displays a user's collection of art works.
+ It retrieves the user's art works from the backend API based on the user's username and display them
+ in either "created" or "liked" mode, depending on what the user selects. The component also displays
+ the user's basic information (e.g., name, email) and provides a button to follow the user, if the user
+ is not already being followed by the logged-in user. The component also displays the number of followers
+ and followings for the user.
+ */
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ArtWork from '../../components/ArtWork/ArtWork'

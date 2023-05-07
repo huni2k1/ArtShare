@@ -1,3 +1,14 @@
+/**
+ * This file defines the ArtWorkList component, which displays a table of artwork data 
+ * retrieved from a backend API and Firebase Storage. The component allows searching for 
+ * specific artwork by description and toggling the active status of each artwork. 
+ * Artwork data is loaded asynchronously using useEffect and Promise.all, and images 
+ * are loaded as base64-encoded strings using Firebase Storage's getDownloadURL method. 
+ * 
+ * The component relies on helper functions deactivateArtWork and activateArtWork for 
+ * toggling artwork active status. 
+ */
+
 import axios from 'axios';
 import { getDownloadURL, ref } from 'firebase/storage';
 import React, { useEffect, useState } from 'react'

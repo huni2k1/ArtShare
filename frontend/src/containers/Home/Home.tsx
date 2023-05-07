@@ -1,3 +1,10 @@
+/*
+This file contains the code for the Home page component of the art sharing application. It uses React, axios, and Firebase storage to fetch and display artworks, and provides a dropdown menu for users to filter artworks by "New & Noteworthy", "Popular", or "Following".
+
+The component also uses the react-infinite-scroll-component library to implement infinite scrolling, and the react-router-dom library to handle navigation to different pages of the application.
+
+Before rendering the component, it checks if the user is logged in using the isLoggedIn() function from the helper/IsLoggedIn module. If the user is not logged in, it redirects to the login page.
+*/
 import { useEffect, useState } from 'react';
 import styles from "./Home.module.css"
 import { AiOutlineDown } from "react-icons/ai";

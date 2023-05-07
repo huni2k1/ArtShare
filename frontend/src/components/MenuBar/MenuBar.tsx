@@ -1,3 +1,9 @@
+
+/**
+ * This file contains the MenuBar component, which is used to display a menu bar
+ * at the top of the application with links to different pages and a search bar.
+ * It also includes a user dropdown menu that displays when the user's avatar is clicked.
+ */
 import React, { useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Link, useNavigate } from 'react-router-dom'
